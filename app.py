@@ -27,7 +27,7 @@ for message in st.session_state.messages:
 # --- SIDEBAR INPUTS ---
 with st.sidebar:
     st.header("Your Details")
-    name = st.text_input("Name", "Himanshu")
+    name = st.text_input("Name", "John")
     age = st.number_input("Age", 18, 60, 29)
     cover_age = st.number_input("Cover Till Age", 19, 85, 60)
     expenses = st.number_input("Monthly Expenses (₹)", 10000, 500000, 50000, step=5000)
