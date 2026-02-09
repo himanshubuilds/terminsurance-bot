@@ -3,8 +3,7 @@ import requests
 import json
 
 # --- CONFIGURATION ---
-# We will get this URL from Make.com in the next step.
-# For now, keep this placeholder.
+# PASTE YOUR MAKE.COM WEBHOOK URL HERE
 WEBHOOK_URL = "https://hook.eu1.make.com/owa3p5nqer5mt7hnuh92ctd1pii2r5u2"
 
 st.set_page_config(page_title="Insurance Assistant", page_icon="🤖")
@@ -27,7 +26,7 @@ for message in st.session_state.messages:
 # --- SIDEBAR INPUTS ---
 with st.sidebar:
     st.header("Your Details")
-    name = st.text_input("Name", "John")
+    name = st.text_input("Name", "Himanshu")
     age = st.number_input("Age", 18, 60, 29)
     cover_age = st.number_input("Cover Till Age", 19, 85, 60)
     expenses = st.number_input("Monthly Expenses (₹)", 10000, 500000, 50000, step=5000)
@@ -57,35 +56,79 @@ if calculate_btn:
                     "gender": gender
                 }
                 
-                # Check if URL is still the placeholder
-                if "REPLACE_ME" in WEBHOOK_URL:
-                    st.error("🚨 Setup Needed: You haven't added the Make.com Webhook URL to app.py yet!")
-                    st.stop()
-
                 response = requests.post(WEBHOOK_URL, json=payload)
                 
-                # Get the JSON answer back
                 if response.status_code == 200:
                     data = response.json()
                     
-                    # 3. Create the HTML Card
+                    # 3. THE PRO DESIGN HTML CARD (Sections A, B, C)
                     html_card = f"""
-                    <div style="font-family: sans-serif; background-color: #f4f7f9; padding: 20px; border-radius: 12px; border: 1px solid #ddd;">
-                        <div style="background: linear-gradient(135deg, #0061ff 0%, #60efff 100%); padding: 15px; border-radius: 8px; color: white; text-align: center; margin-bottom: 15px;">
-                            <p style="margin:0; font-size: 12px; opacity: 0.9;">RECOMMENDED COVER</p>
-                            <h2 style="margin: 5px 0;">₹ {data.get('cover', '0')} Cr</h2>
+                    <div style="font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f4f7f9; padding: 20px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+
+                      <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+
+                        <div style="flex: 1; min-width: 200px; background-color: #ffffff; border: 1px solid #e1e8ed; border-radius: 12px; padding: 15px;">
+                          <h3 style="margin: 0 0 12px 0; color: #1565c0; font-size: 16px; font-weight: 700;">👤 User Profile</h3>
+                          <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; border-bottom: 1px dashed #eee;">
+                            <span style="color: #666;">Name:</span> <span style="font-weight: 600; color: #333;">{name}</span>
+                          </div>
+                          <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; border-bottom: 1px dashed #eee;">
+                            <span style="color: #666;">Age:</span> <span style="font-weight: 600; color: #333;">{age} Years</span>
+                          </div>
+                          <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; border-bottom: 1px dashed #eee;">
+                            <span style="color: #666;">Cover Till:</span> <span style="font-weight: 600; color: #333;">{cover_age}</span>
+                          </div>
+                          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                            <span style="color: #666;">Expenses:</span> <span style="font-weight: 600; color: #333;">₹ {expenses:,}</span>
+                          </div>
                         </div>
-                        <div style="background: white; padding: 10px; border-radius: 8px;">
-                            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding: 8px 0;">
-                                <b>HDFC Life</b> <span style="color:#0061ff; font-weight:bold;">₹ {data.get('hdfc', '0')}/mo</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding: 8px 0;">
-                                <b>ICICI Pru</b> <span style="color:#0061ff; font-weight:bold;">₹ {data.get('icici', '0')}/mo</span>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; padding: 8px 0;">
-                                <b>Max Life</b> <span style="color:#0061ff; font-weight:bold;">₹ {data.get('max', '0')}/mo</span>
-                            </div>
+
+                        <div style="flex: 1; min-width: 200px; background: linear-gradient(135deg, #0061ff 0%, #60efff 100%); border-radius: 12px; padding: 20px; text-align: center; color: white; display: flex; flex-direction: column; justify-content: center;">
+                          <p style="margin: 0; font-size: 11px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px;">Recommended Cover</p>
+                          <h1 style="margin: 8px 0; font-size: 34px; font-weight: 800;">₹ {data.get('cover', '0')} Cr</h1>
+                          <div style="background: rgba(255,255,255,0.2); padding: 6px 10px; border-radius: 20px; font-size: 11px; display: inline-block;">
+                            Income Replacement Method
+                          </div>
                         </div>
+
+                      </div>
+
+                      <div style="background-color: #ffffff; border: 1px solid #e1e8ed; border-radius: 12px; overflow: hidden;">
+                        <div style="background-color: #f8faff; padding: 12px 15px; border-bottom: 1px solid #e1e8ed;">
+                          <h3 style="margin: 0; color: #444; font-size: 14px; font-weight: 700; text-transform: uppercase;">🏆 Premium Estimates</h3>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f0f0f0;">
+                          <div style="width: 40%;">
+                            <div style="font-weight: 700; color: #333; font-size: 15px;">HDFC Life</div>
+                            <div style="font-size: 11px; color: #2e7d32; background: #e8f5e9; padding: 2px 6px; border-radius: 4px;">99.7% Claim Ratio</div>
+                          </div>
+                          <div style="width: 60%; text-align: right;">
+                            <div style="font-weight: 700; color: #1565c0; font-size: 18px;">₹ {data.get('hdfc', '0')}<span style="font-size: 12px; color: #999; font-weight: 400;">/mo</span></div>
+                          </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f0f0f0;">
+                          <div style="width: 40%;">
+                            <div style="font-weight: 700; color: #333; font-size: 15px;">ICICI Pru</div>
+                            <div style="font-size: 11px; color: #ef6c00; background: #fff3e0; padding: 2px 6px; border-radius: 4px;">Terminal Illness</div>
+                          </div>
+                          <div style="width: 60%; text-align: right;">
+                            <div style="font-weight: 700; color: #1565c0; font-size: 18px;">₹ {data.get('icici', '0')}<span style="font-size: 12px; color: #999; font-weight: 400;">/mo</span></div>
+                          </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 15px;">
+                          <div style="width: 40%;">
+                            <div style="font-weight: 700; color: #333; font-size: 15px;">Max Life</div>
+                            <div style="font-size: 11px; color: #666; background: #f5f5f5; padding: 2px 6px; border-radius: 4px;">Premium Break</div>
+                          </div>
+                          <div style="width: 60%; text-align: right;">
+                            <div style="font-weight: 700; color: #1565c0; font-size: 18px;">₹ {data.get('max', '0')}<span style="font-size: 12px; color: #999; font-weight: 400;">/mo</span></div>
+                          </div>
+                        </div>
+
+                      </div>
                     </div>
                     """
                     
@@ -98,7 +141,7 @@ if calculate_btn:
                         "card_html": html_card
                     })
                 else:
-                    st.error(f"Error: {response.text}")
+                    st.error(f"Error from Make.com: {response.text}")
 
             except Exception as e:
                 st.error(f"Connection Error: {e}")
