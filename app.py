@@ -10,7 +10,7 @@ st.set_page_config(page_title="Insurance Assistant", page_icon="🤖")
 
 # --- CHATBOT UI SETUP ---
 st.title("🤖 Insurance Assistant")
-st.caption("I calculate premiums using your Google Sheets logic.")
+st.caption("I calculate premiums using income replacement method.")
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -44,7 +44,7 @@ if calculate_btn:
 
     # 2. Call Make.com (The "Brain")
     with st.chat_message("assistant"):
-        with st.spinner("Consulting the Google Sheet..."):
+        with st.spinner("Consulting our AI powered brain..."):
             try:
                 # Send data to Make.com
                 payload = {
@@ -87,7 +87,7 @@ if calculate_btn:
                           <p style="margin: 0; font-size: 11px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px;">Recommended Cover</p>
                           <h1 style="margin: 8px 0; font-size: 34px; font-weight: 800;">₹ {data.get('cover', '0')} Cr</h1>
                           <div style="background: rgba(255,255,255,0.2); padding: 6px 10px; border-radius: 20px; font-size: 11px; display: inline-block;">
-                            Income Replacement Method
+                            Covers inflation adjusted living expenses
                           </div>
                         </div>
 
