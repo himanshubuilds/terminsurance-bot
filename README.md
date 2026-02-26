@@ -14,7 +14,7 @@ Calculating term insurance can be confusing and overwhelming for the average per
 ## Tech Stack
 - **Frontend/Framework:** Streamlit
 - **Language:** Python
-- **Automation: ** Make.com
+- **Automation:** Make.com
 
 ## How to Run Locally
 1. Clone the repository:
